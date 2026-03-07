@@ -7,7 +7,7 @@
 ### أول لغة برمجة عربية متكاملة مع الذكاء الاصطناعي
 ### The First AI-Native Arabic Programming Language
 
-[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://github.com/radhwendalyhamdouni/Al-Marjaa-Language)
+[![Version](https://img.shields.io/badge/version-3.3.0-blue.svg)](https://github.com/radhwendalyhamdouni/Al-Marjaa-Language)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
@@ -251,7 +251,7 @@ cargo install --path .
 
 ```bash
 almarjaa --version
-# الناتج: لغة المرجع - الإصدار 3.1.0
+# الناتج: لغة المرجع - الإصدار 3.3.0
 ```
 
 ---

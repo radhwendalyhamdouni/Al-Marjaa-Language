@@ -2,7 +2,7 @@
 # 🏗️ معمارية لغة المرجع (Al-Marjaa Language Architecture)
 # ═══════════════════════════════════════════════════════════════════════════════
 # المؤلف: رضوان دالي حمدوني
-# الإصدار: 3.2.0
+# الإصدار: 3.3.0
 # ═══════════════════════════════════════════════════════════════════════════════
 
 ## 📋 نظرة عامة
@@ -181,11 +181,56 @@ Al-Marjaa-Language/
 │   ├── 📂 exporter/                 # نظام التصدير
 │   │   └── mod.rs                   # تصدير HTML, Rust, Exe
 │   │
-│   ├── 📂 package_manager/          # مدير الحزم
+│   ├── 📂 package_manager/          # مدير الحزم المتقدم
 │   │   ├── mod.rs                   # الواجهة الرئيسية
-│   │   ├── registry.rs              # سجل الحزم
+│   │   ├── config.rs                # تكوين المشروع (مشروع.toml)
+│   │   ├── registry.rs              # سجل الحزم المركزي
 │   │   ├── installer.rs             # مثبِّت الحزم
-│   │   └── dependency.rs            # تحليل التبعيات
+│   │   ├── dependency.rs            # تحليل التبعيات
+│   │   ├── resolver.rs              # حل التبعيات الذكي
+│   │   ├── publisher.rs             # ناشر الحزم
+│   │   ├── security.rs              # التحقق الأمني
+│   │   ├── stats.rs                 # إحصائيات الحزم
+│   │   ├── badges.rs                # شارات الجودة
+│   │   ├── decentralized.rs         # سجل لامركزي (IPFS)
+│   │   ├── reputation.rs            # نظام السمعة
+│   │   ├── versioning.rs            # الإصدار الدلالي
+│   │   ├── lockfile.rs              # ملف القفل الذكي
+│   │   ├── binary.rs                # التوزيع الثنائي
+│   │   ├── signing.rs               # توقيع الحزم
+│   │   └── workspace.rs             # دعم المشاريع المتعددة
+│   │
+│   ├── 📂 stdlib/                   # المكتبة القياسية (جديد! v3.3.0)
+│   │   ├── mod.rs                   # الوحدة الرئيسية
+│   │   ├── http/                    # وحدة HTTP
+│   │   │   ├── mod.rs               # الواجهة الرئيسية
+│   │   │   ├── client.rs            # عميل HTTP
+│   │   │   ├── server.rs            # خادم HTTP
+│   │   │   ├── websocket.rs         # WebSocket
+│   │   │   ├── middleware.rs        # البرمجيات الوسيطة
+│   │   │   ├── request.rs           # الطلبات
+│   │   │   ├── response.rs          # الاستجابات
+│   │   │   ├── cookies.rs           # ملفات تعريف الارتباط
+│   │   │   └── session.rs           # الجلسات
+│   │   ├── database/                # وحدة قواعد البيانات
+│   │   │   ├── mod.rs               # الواجهة الرئيسية
+│   │   │   ├── connection.rs        # إدارة الاتصالات
+│   │   │   ├── query.rs             # منشئ الاستعلامات
+│   │   │   ├── pool.rs              # تجمع الاتصالات
+│   │   │   ├── mysql.rs             # MySQL/MariaDB
+│   │   │   ├── postgres.rs          # PostgreSQL
+│   │   │   ├── sqlite.rs            # SQLite
+│   │   │   └── mongodb.rs           # MongoDB
+│   │   ├── regex/                   # وحدة التعابير النمطية
+│   │   │   └── mod.rs               # Pattern matching
+│   │   └── crypto/                  # وحدة التشفير
+│   │       ├── mod.rs               # الواجهة الرئيسية
+│   │       ├── hash.rs              # دوال الهاش
+│   │       ├── symmetric.rs         # التشفير المتماثل
+│   │       ├── asymmetric.rs        # التشفير غير المتماثل
+│   │       ├── jwt.rs               # JWT Tokens
+│   │       ├── password.rs          # تشفير كلمات المرور
+│   │       └── random.rs            # توليد عشوائي آمن
 │   │
 │   ├── 📂 linter/                   # المحلل الثابت
 │   │   └── mod.rs                   # تحليل الكود
