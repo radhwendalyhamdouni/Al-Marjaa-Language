@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>almarjaa</id>
+    <version>3.3.0</version>
+    <title>Al-Marjaa Language</title>
+    <authors>رضوان دالي حمدوني</authors>
+    <projectUrl>https://github.com/radhwendalyhamdouni/Al-Marjaa-Language</projectUrl>
+    <licenseUrl>https://github.com/radhwendalyhamdouni/Al-Marjaa-Language/blob/main/LICENSE</licenseUrl>
+    <tags>arabic programming-language ai nlp</tags>
+    <summary>لغة المرجع - لغة برمجة عربية متكاملة</summary>
+    <description>لغة برمجة عربية متكاملة مع ذكاء اصطناعي</description>
+  </metadata>
+</package>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+Flatpak Package للغة المرجع
+═══════════════════════════════════════════════════════════════════════════════
+الاستخدام: flatpak install io.almarjaa.Almarjaa
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<component type="desktop-application">
+  <id>io.almarjaa.Almarjaa</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>All-Rights-Reserved</project_license>
+  <name>Al-Marjaa</name>
+  <name xml:lang="ar">المرجع</name>
+  <summary>Arabic Programming Language with AI Integration</summary>
+  <summary xml:lang="ar">لغة برمجة عربية متكاملة مع ذكاء اصطناعي</summary>
+  
+  <description>
+    <p>Al-Marjaa is a complete Arabic programming language featuring:</p>
+    <p xml:lang="ar">لغة المرجع هي لغة برمجة عربية متكاملة مع:</p>
+    
+    <ul>
+      <li>Advanced JIT Compiler (5-Tier)</li>
+      <li>Vibe Coding with AI</li>
+      <li>Complete Standard Library (HTTP, Database, Regex, Crypto)</li>
+      <li>ONNX Neural Network Support</li>
+      <li>Integrated UI System</li>
+      <li>LSP Server</li>
+    </ul>
+    
+    <ul xml:lang="ar">
+      <li>JIT Compiler متقدم (5 مستويات)</li>
+      <li>Vibe Coding مع الذكاء الاصطناعي</li>
+      <li>المكتبة القياسية الشاملة</li>
+      <li>دعم ONNX للشبكات العصبية</li>
+      <li>نظام واجهات المستخدم المتكامل</li>
+      <li>LSP Server متكامل</li>
+    </ul>
+  </description>
+  
+  <launchable type="desktop-id">io.almarjaa.Almarjaa.desktop</launchable>
+  
+  <url type="homepage">https://almarjaa.io</url>
+  <url type="bugtracker">https://github.com/radhwendalyhamdouni/Al-Marjaa-Language/issues</url>
+  <url type="help">https://docs.almarjaa.io</url>
+  
+  <developer_name>رضوان دالي حمدوني</developer_name>
+  
+  <releases>
+    <release version="3.3.0" date="2026-02-01">
+      <description>
+        <p>LSP Server متكامل ومتقدم</p>
+        <p>Semantic Tokens للتلوين الدلالي</p>
+        <p>Code Actions و Code Lens</p>
+        <p>Inlay Hints و Call Hierarchy</p>
+      </description>
+    </release>
+  </releases>
+  
+  <content_rating type="oars-1.1" />
+  
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+  
+  <provides>
+    <binary>almarjaa</binary>
+    <binary>almarjaa-lsp</binary>
+  </provides>
+</component>

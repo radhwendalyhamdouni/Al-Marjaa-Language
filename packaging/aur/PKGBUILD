@@ -1,0 +1,109 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUR PKGBUILD للغة المرجع
+# ═══════════════════════════════════════════════════════════════════════════════
+# الاستخدام: yay -S almarjaa
+# ═══════════════════════════════════════════════════════════════════════════════
+
+pkgname=almarjaa
+pkgver=3.3.0
+pkgrel=1
+pkgdesc="لغة المرجع - لغة برمجة عربية متكاملة مع ذكاء اصطناعي"
+arch=('x86_64' 'aarch64')
+url="https://github.com/radhwendalyhamdouni/Al-Marjaa-Language"
+license=('custom')
+depends=('gcc-libs' 'openssl')
+makedepends=('rust' 'cargo' 'pkg-config')
+optdepends=(
+    'vscode: VS Code editor support'
+    'neovim: Neovim editor support'
+)
+provides=('almarjaa' 'almarjaa-lsp')
+conflicts=('almarjaa-git')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('PLACEHOLDER_SHA256')
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Build
+# ═══════════════════════════════════════════════════════════════════════════════
+
+build() {
+    cd "$pkgname-$pkgver"
+    
+    # بناء الـ binary الرئيسي
+    cargo build --release --locked
+    
+    # بناء LSP Server
+    cd editors/lsp-server
+    cargo build --release --locked
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Package
+# ═══════════════════════════════════════════════════════════════════════════════
+
+package() {
+    cd "$pkgname-$pkgver"
+    
+    # تثبيت الـ binary الرئيسي
+    install -Dm755 target/release/almarjaa "$pkgdir/usr/bin/almarjaa"
+    
+    # تثبيت LSP Server
+    install -Dm755 editors/lsp-server/target/release/almarjaa-lsp "$pkgdir/usr/bin/almarjaa-lsp"
+    
+    # تثبيت التوثيق
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 CHANGELOG.md "$pkgdir/usr/share/doc/$pkgname/CHANGELOG.md"
+    
+    # تثبيت الأمثلة
+    mkdir -p "$pkgdir/usr/share/$pkgname/examples"
+    cp -r examples/*.mrj "$pkgdir/usr/share/$pkgname/examples/"
+    
+    # تثبيت الرخصة
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    
+    # تثبيت ملفات desktop (اختياري)
+    mkdir -p "$pkgdir/usr/share/applications"
+    cat > "$pkgdir/usr/share/applications/almarjaa.desktop" << EOF
+[Desktop Entry]
+Name=Al-Marjaa
+Name[ar]=المرجع
+Comment=Arabic Programming Language IDE
+Comment[ar]=لغة برمجة عربية
+Exec=almarjaa %F
+Icon=almarjaa
+Terminal=true
+Type=Application
+Categories=Development;IDE;
+EOF
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Check
+# ═══════════════════════════════════════════════════════════════════════════════
+
+check() {
+    cd "$pkgname-$pkgver"
+    cargo test --release --locked
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Post-install message
+# ═══════════════════════════════════════════════════════════════════════════════
+
+post_install() {
+    echo ""
+    echo "╔═══════════════════════════════════════════════════════════════════════════════╗"
+    echo "║         🌙 لغة المرجع - Al-Marjaa Language v$pkgver                         ║"
+    echo "╠═══════════════════════════════════════════════════════════════════════════════╣"
+    echo "║  ✅ تم التثبيت بنجاح!                                                        ║"
+    echo "║                                                                               ║"
+    echo "║  🚀 للتشغيل:                                                                  ║"
+    echo "║     almarjaa              # الوضع التفاعلي                                  ║"
+    echo "║     almarjaa script.mrj   # تشغيل ملف                                       ║"
+    echo "║     almarjaa --help       # المساعدة                                         ║"
+    echo "║                                                                               ║"
+    echo "║  📚 الأمثلة: /usr/share/almarjaa/examples/                                   ║"
+    echo "║  📖 التوثيق: https://docs.almarjaa.io                                        ║"
+    echo "╚═══════════════════════════════════════════════════════════════════════════════╝"
+    echo ""
+}

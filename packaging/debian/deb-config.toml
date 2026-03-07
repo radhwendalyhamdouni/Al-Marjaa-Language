@@ -1,0 +1,59 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Debian Package Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+# الاستخدام: sudo dpkg -i almarjaa.deb
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[package]
+name = "almarjaa"
+version = "3.3.0"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# معلومات الحزمة
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[package.metadata.deb]
+maintainer = "رضوان دالي حمدوني <almarjaa.project@hotmail.com>"
+copyright = "2026, رضوان دالي حمدوني <almarjaa.project@hotmail.com>"
+license-file = ["LICENSE", "0"]
+extended-description = """\
+لغة المرجع - لغة برمجة عربية متكاملة مع ذكاء اصطناعي ودعم ONNX ونظام واجهات متقدم.
+
+الميزات الرئيسية:
+- JIT Compiler متقدم (5 مستويات)
+- Vibe Coding مع الذكاء الاصطناعي
+- دعم ONNX للشبكات العصبية
+- نظام واجهات المستخدم المتكامل
+- المكتبة القياسية الشاملة (HTTP, Database, Regex, Crypto)
+- LSP Server متكامل
+- دعم كامل للغة العربية
+"""
+depends = "libc6 (>= 2.27), libssl1.1 (>= 1.1.1)"
+section = "devel"
+priority = "optional"
+assets = [
+    ["target/release/almarjaa", "usr/bin/", "755"],
+    ["target/release/almarjaa-lsp", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/almarjaa/", "644"],
+    ["CHANGELOG.md", "usr/share/doc/almarjaa/", "644"],
+    ["LICENSE", "usr/share/doc/almarjaa/", "644"],
+    ["examples/*.mrj", "usr/share/almarjaa/examples/", "644"],
+]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Systemd Service (اختياري)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[package.metadata.deb.systemd-units]
+unit-scripts = "packaging/debian/systemd/"
+unit-name = "almarjaa-lsp"
+enable = false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ملفات التكوين
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[package.metadata.deb.conf-files]
+files = [
+    "/etc/almarjaa/config.toml",
+]

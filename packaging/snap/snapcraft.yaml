@@ -1,0 +1,18 @@
+name: almarjaa
+version: "3.3.0"
+summary: لغة المرجع - لغة برمجة عربية
+description: |
+  لغة برمجة عربية متكاملة مع ذكاء اصطناعي
+base: core22
+confinement: strict
+grade: stable
+
+apps:
+  almarjaa:
+    command: bin/almarjaa
+    plugs: [home, network]
+
+parts:
+  almarjaa:
+    plugin: rust
+    source: .
