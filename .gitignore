@@ -113,3 +113,7 @@ docs/.doctrees/
 *~
 *.backup
 *.old
+
+# Next.js
+.next/
+out/
