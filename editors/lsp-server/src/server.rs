@@ -1,8 +1,7 @@
 //! ═══════════════════════════════════════════════════════════════════════════════
 //! LSP Server - الخادم الرئيسي
-//! حلقة المعالجة الرئيسية وتوزيع الطلبات
-//! متكامل مع المحلل الفعلي للغة المرجع
 //! ═══════════════════════════════════════════════════════════════════════════════
+//! حلقة المعالجة الرئيسية وتوزيع الطلبات
 
 use std::sync::Arc;
 use std::thread::{self, JoinHandle};
@@ -23,11 +22,15 @@ pub struct LspServer {
 
 impl LspServer {
     /// إنشاء خادم جديد
-    pub fn new(receiver: Receiver<LspMessage>, sender: Sender<LspMessage>) -> Self {
+    pub fn new(
+        receiver: Receiver<LspMessage>, 
+        sender: Sender<LspMessage>,
+        state: Arc<ServerState>,
+    ) -> Self {
         Self {
             receiver,
             sender,
-            state: Arc::new(ServerState::new()),
+            state,
         }
     }
     
@@ -40,12 +43,11 @@ impl LspServer {
     
     /// حلقة المعالجة الرئيسية
     fn run(&self) {
-        eprintln!("[LSP] ════════════════════════════════════════════════════════════");
-        eprintln!("[LSP]    Al-Marjaa Language Server v3.0.0");
-        eprintln!("[LSP]    لغة برمجة عربية متكاملة مع الذكاء الاصطناعي");
-        eprintln!("[LSP] ════════════════════════════════════════════════════════════");
-        eprintln!("[LSP] Server started, waiting for messages...");
-        eprintln!("[LSP]");
+        log::info!("════════════════════════════════════════════════════════════");
+        log::info!("   Al-Marjaa Language Server v3.3.0");
+        log::info!("   لغة برمجة عربية متكاملة مع الذكاء الاصطناعي");
+        log::info!("════════════════════════════════════════════════════════════");
+        log::info!("Server started, waiting for messages...");
         
         loop {
             match self.receiver.recv() {
@@ -53,13 +55,13 @@ impl LspServer {
                     self.handle_message(message);
                 }
                 Err(_) => {
-                    eprintln!("[LSP] Channel closed, shutting down...");
+                    log::info!("Channel closed, shutting down...");
                     break;
                 }
             }
         }
         
-        eprintln!("[LSP] Server stopped.");
+        log::info!("Server stopped.");
     }
     
     /// معالجة رسالة
@@ -68,39 +70,47 @@ impl LspServer {
         
         match message {
             LspMessage::Request { id, method, params } => {
-                eprintln!("[LSP] → Request #{}: {}", id, method);
-                
                 let start = std::time::Instant::now();
+                log::debug!("→ Request #{}: {}", id, method);
+                
                 let response = handler.handle_request(id, &method, params);
                 let elapsed = start.elapsed();
                 
-                eprintln!("[LSP] ← Response #{}: {:?} ({}ms)", id, 
-                    if response.is_success() { "OK" } else { "Error" },
-                    elapsed.as_millis()
-                );
+                let status = if response.is_success() { "OK" } else { "Error" };
+                log::debug!("← Response #{}: {} ({}ms)", id, status, elapsed.as_millis());
                 
                 if self.sender.send(response).is_err() {
-                    eprintln!("[LSP] ⚠ Failed to send response");
+                    log::error!("Failed to send response");
                 }
             }
             LspMessage::Notification { method, params } => {
-                eprintln!("[LSP] → Notification: {}", method);
+                log::debug!("→ Notification: {}", method);
                 
-                if let Some(response) = handler.handle_notification(&method, params.clone()) {
-                    // نشر التشخيصات
-                    if method == "textDocument/didOpen" || method == "textDocument/didChange" {
-                        if let Some(uri) = self.extract_uri(&params) {
-                            self.publish_diagnostics(&uri);
+                match handler.handle_notification(&method, params.clone()) {
+                    Some(response) => {
+                        // نشر التشخيصات
+                        if method == "textDocument/didOpen" || method == "textDocument/didChange" {
+                            if let Some(uri) = self.extract_uri(&params) {
+                                self.publish_diagnostics(&uri);
+                            }
+                        } else if response.is_notification() {
+                            if self.sender.send(response).is_err() {
+                                log::error!("Failed to send notification");
+                            }
                         }
-                    } else if response.is_notification() {
-                        if self.sender.send(response).is_err() {
-                            eprintln!("[LSP] ⚠ Failed to send notification");
+                    }
+                    None => {
+                        // نشر التشخيصات للملفات المفتوحة/المعدلة
+                        if method == "textDocument/didOpen" || method == "textDocument/didChange" {
+                            if let Some(uri) = self.extract_uri(&params) {
+                                self.publish_diagnostics(&uri);
+                            }
                         }
                     }
                 }
             }
             LspMessage::Response { .. } => {
-                eprintln!("[LSP] ⚠ Unexpected response from client");
+                log::warn!("Unexpected response from client");
             }
         }
     }
@@ -129,31 +139,19 @@ impl LspServer {
             version: None,
         };
         
+        // تحديث الإحصائيات
+        self.state.stats.write().diagnostics_sent += 1;
+        
         let notification = LspMessage::Notification {
             method: "textDocument/publishDiagnostics".to_string(),
             params: serde_json::to_value(params).unwrap_or(serde_json::Value::Null),
         };
         
         if self.sender.send(notification).is_err() {
-            eprintln!("[LSP] ⚠ Failed to publish diagnostics for: {}", uri);
+            log::error!("Failed to publish diagnostics for: {}", uri);
         } else {
-            eprintln!("[LSP] ✓ Published diagnostics for: {}", uri);
+            log::debug!("✓ Published diagnostics for: {}", uri);
         }
-    }
-}
-
-impl LspMessage {
-    /// هل هي استجابة ناجحة؟
-    fn is_success(&self) -> bool {
-        match self {
-            LspMessage::Response { error, .. } => error.is_none(),
-            _ => true,
-        }
-    }
-    
-    /// هل هي إشعار؟
-    fn is_notification(&self) -> bool {
-        matches!(self, LspMessage::Notification { .. })
     }
 }
 
@@ -164,6 +162,7 @@ mod tests {
     #[test]
     fn test_server_creation() {
         let (sender, receiver) = crossbeam_channel::bounded(16);
-        let _server = LspServer::new(receiver, sender);
+        let state = Arc::new(ServerState::new());
+        let _server = LspServer::new(receiver, sender, state);
     }
 }

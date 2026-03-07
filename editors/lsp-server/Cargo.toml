@@ -1,9 +1,9 @@
 [package]
 name = "almarjaa-lsp"
-version = "3.0.0"
+version = "3.3.0"
 edition = "2021"
-authors = ["رضوان دالي حمدوني"]
-description = "LSP Server للغة المرجع - متكامل مع المحلل الأصلي"
+authors = ["رضوان دالي حمدوني <almarjaa.project@hotmail.com>"]
+description = "LSP Server متكامل ومتقدم للغة المرجع - مع ميزات ذكية فريدة"
 
 [[bin]]
 name = "almarjaa-lsp"
@@ -20,13 +20,42 @@ serde_json = "1.0"
 
 # معالجة النصوص
 unicode-segmentation = "1.11"
+regex = "1.10"
 
-# التزامن
+# التزامن والتوازي
 rayon = "1.10"
+parking_lot = "0.12"
+arc-swap = "1.7"
 
-# من المشروع الأصلي - استخدام المسار النسبي
-# عند الدمج الفعلي، غير المسار ليشير إلى المجلد الأصلي
-almarjaa = { path = ".." }
+# التخزين المؤقت
+lru = "0.12"
+dashmap = "5.5"
+
+# الأداء
+memchr = "2.7"
+aho-corasick = "1.1"
+
+# السجلات
+log = "0.4"
+env_logger = "0.11"
+
+# من المشروع الأصلي
+almarjaa = { path = "../.." }
+
+[dev-dependencies]
+criterion = "0.5"
+pretty_assertions = "1.4"
 
 [features]
-default = []
+default = ["full"]
+full = ["semantic-tokens", "code-lens", "inlay-hints", "call-hierarchy"]
+semantic-tokens = []
+code-lens = []
+inlay-hints = []
+call-hierarchy = []
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

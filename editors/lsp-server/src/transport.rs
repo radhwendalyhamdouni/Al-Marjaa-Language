@@ -1,9 +1,9 @@
 //! ═══════════════════════════════════════════════════════════════════════════════
 //! Transport Layer - طبقة النقل لـ JSON-RPC
-//! التعامل مع stdin/stdout للتواصل مع VS Code
 //! ═══════════════════════════════════════════════════════════════════════════════
+//! التعامل مع stdin/stdout للتواصل مع VS Code
 
-use std::io::{BufRead, BufReader, BufWriter, Write};
+use std::io::{BufRead, BufWriter, Write};
 use std::thread::{self, JoinHandle};
 
 use crossbeam_channel::Sender;
@@ -32,22 +32,22 @@ impl<R: BufRead + Send + 'static, W: Write + Send + 'static> Transport<R, W> {
     
     /// حلقة القراءة الرئيسية
     fn read_loop(mut self) {
-        eprintln!("[Transport] Starting read loop...");
+        log::info!("[Transport] Starting read loop...");
         
         loop {
             match self.read_message() {
                 Ok(Some(message)) => {
                     if self.sender.send(message).is_err() {
-                        eprintln!("[Transport] Channel closed, exiting");
+                        log::info!("[Transport] Channel closed, exiting");
                         break;
                     }
                 }
                 Ok(None) => {
-                    eprintln!("[Transport] EOF reached, exiting");
+                    log::info!("[Transport] EOF reached, exiting");
                     break;
                 }
                 Err(e) => {
-                    eprintln!("[Transport] Error reading message: {}", e);
+                    log::error!("[Transport] Error reading message: {}", e);
                     
                     // إرسال خطأ للعميل
                     let error = LspError::parse_error(&e);
@@ -64,7 +64,7 @@ impl<R: BufRead + Send + 'static, W: Write + Send + 'static> Transport<R, W> {
             }
         }
         
-        eprintln!("[Transport] Read loop ended");
+        log::info!("[Transport] Read loop ended");
     }
     
     /// قراءة رسالة واحدة

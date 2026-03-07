@@ -1,40 +1,68 @@
 //! ═══════════════════════════════════════════════════════════════════════════════
-//! LSP Server للغة المرجع
-//! خادم Language Server Protocol كامل مع JSON-RPC
-//! متكامل مع المحلل الفعلي للغة المرجع
+//! LSP Server المتقدم للغة المرجع
+//! ═══════════════════════════════════════════════════════════════════════════════
+//! الإصدار 3.3.0 - متكامل مع المحلل الأصلي
+//! 
+//! الميزات:
+//! ✅ الإكمال التلقائي الذكي مع Type Inference
+//! ✅ التنقل للتعريف والمراجع
+//! ✅ التشخيصات والأخطاء
+//! ✅ Semantic Tokens للتلوين الدلالي
+//! ✅ Code Actions للإصلاح السريع
+//! ✅ Code Lens للعمليات السريعة
+//! ✅ Inlay Hints للتلميحات المضمنة
+//! ✅ Call Hierarchy لتتبع الاستدعاءات
+//! ✅ Rename لإعادة التسمية
+//! ✅ Formatting للتنسيق
+//! ✅ Folding Ranges للطي
+//! ✅ Signature Help للمساعدة
+//! ✅ دعم محسن للعربية RTL
 //! ═══════════════════════════════════════════════════════════════════════════════
 
 mod transport;
 mod server;
 mod handlers;
 mod state;
+mod capabilities;
+mod semantic_tokens;
+mod code_actions;
+mod code_lens;
+mod inlay_hints;
+mod call_hierarchy;
+mod formatting;
+mod folding;
+mod rename;
+mod signature_help;
+mod workspace_symbols;
+mod diagnostics;
+mod arabic_support;
+mod type_inference;
+mod cache;
 
 use std::io::{self, BufReader, BufWriter};
+use std::sync::Arc;
 
 use crossbeam_channel::{bounded, Sender};
+use parking_lot::RwLock;
 
 use crate::server::LspServer;
 use crate::transport::Transport;
+use crate::state::ServerState;
 
 /// نقطة الدخول الرئيسية
 fn main() {
+    // تهيئة السجلات
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info"))
+        .init();
+    
     // طباعة معلومات البدء
-    eprintln!();
-    eprintln!("╔═══════════════════════════════════════════════════════════════╗");
-    eprintln!("║         لغة المرجع - Al-Marjaa Language Server               ║");
-    eprintln!("║         الإصدار 3.0.0                                         ║");
-    eprintln!("╠═══════════════════════════════════════════════════════════════╣");
-    eprintln!("║  🧠 LSP Server: ✅ جاهز                                       ║");
-    eprintln!("║  📦 التحليل المعجمي: ✅ مفعّل                                 ║");
-    eprintln!("║  🌳 التحليل النحوي: ✅ مفعّل                                  ║");
-    eprintln!("║  🔍 Linter: ✅ مفعّل                                           ║");
-    eprintln!("║  💡 الإكمال التلقائي: ✅ مفعّل                                 ║");
-    eprintln!("║  🎯 التنقل: ✅ مفعّل                                           ║");
-    eprintln!("╚═══════════════════════════════════════════════════════════════╝");
-    eprintln!();
-
+    print_banner();
+    
+    // إنشاء الحالة المشتركة
+    let state = Arc::new(ServerState::new());
+    
     // إنشاء قنوات الاتصال
-    let (sender, receiver) = bounded(256);
+    let (sender, receiver) = bounded(1024);
     
     // إنشاء النقل (stdin/stdout)
     let stdin = BufReader::new(io::stdin());
@@ -43,11 +71,43 @@ fn main() {
     
     // بدء خيوط المعالجة
     let transport_handle = transport.start();
-    let server_handle = LspServer::new(receiver, sender).start();
+    let server_handle = LspServer::new(receiver, sender, state).start();
     
     // انتظار الانتهاء
     transport_handle.join().unwrap();
     server_handle.join().unwrap();
+}
+
+/// طباعة اللافتة
+fn print_banner() {
+    eprintln!();
+    eprintln!("╔═══════════════════════════════════════════════════════════════════════════════╗");
+    eprintln!("║             🌙 لغة المرجع - Al-Marjaa Language Server                       ║");
+    eprintln!("║                        الإصدار 3.3.0                                         ║");
+    eprintln!("╠═══════════════════════════════════════════════════════════════════════════════╣");
+    eprintln!("║  🧠 LSP Server:          ✅ جاهز ومتقدم                                      ║");
+    eprintln!("║  📦 التحليل المعجمي:     ✅ مفعّل مع Type Inference                          ║");
+    eprintln!("║  🌳 التحليل النحوي:      ✅ مفعّل مع AST كامل                                ║");
+    eprintln!("║  🔍 Linter:              ✅ مفعّل مع 9 قواعد                                 ║");
+    eprintln!("║  💡 الإكمال التلقائي:    ✅ ذكي مع سياق                                      ║");
+    eprintln!("║  🎯 التنقل:              ✅ تعريف + مراجع + استدعاءات                        ║");
+    eprintln!("║  🎨 Semantic Tokens:     ✅ تلوين دلالي متقدم                                ║");
+    eprintln!("║  ⚡ Code Actions:        ✅ إصلاح سريع + تحسينات                             ║");
+    eprintln!("║  📊 Code Lens:           ✅ عدسات تفاعلية                                    ║");
+    eprintln!("║  💬 Inlay Hints:         ✅ تلميحات الأنواع                                  ║");
+    eprintln!("║  🔄 Call Hierarchy:      ✅ تتبع الاستدعاءات                                 ║");
+    eprintln!("║  ✏️ Rename:              ✅ إعادة تسمية ذكية                                 ║");
+    eprintln!("║  📝 Formatting:          ✅ تنسيق تلقائي                                     ║");
+    eprintln!("║  📁 Folding Ranges:      ✅ طي الكود                                         ║");
+    eprintln!("║  🖊️ Signature Help:      ✅ مساعدة التوقيعات                                 ║");
+    eprintln!("║  🔤 Arabic Support:      ✅ دعم محسن RTL                                     ║");
+    eprintln!("╠═══════════════════════════════════════════════════════════════════════════════╣");
+    eprintln!("║  📚 التوثيق: https://docs.almarjaa.io                                        ║");
+    eprintln!("║  🐦 GitHub: github.com/radhwendalyhamdouni/Al-Marjaa-Language                ║");
+    eprintln!("╚═══════════════════════════════════════════════════════════════════════════════╝");
+    eprintln!();
+    eprintln!("[LSP] 🚀 Server started, waiting for connections...");
+    eprintln!();
 }
 
 /// رسالة LSP
@@ -106,6 +166,19 @@ impl LspMessage {
             result: None,
             error: Some(error),
         }
+    }
+    
+    /// هل هي استجابة ناجحة؟
+    pub fn is_success(&self) -> bool {
+        match self {
+            LspMessage::Response { error, .. } => error.is_none(),
+            _ => true,
+        }
+    }
+    
+    /// هل هي إشعار؟
+    pub fn is_notification(&self) -> bool {
+        matches!(self, LspMessage::Notification { .. })
     }
 }
 
@@ -170,6 +243,24 @@ impl LspError {
             code, 
             message: message.to_string(), 
             data: None 
+        }
+    }
+    
+    /// خطأ الطلب الملغي
+    pub fn request_cancelled() -> Self {
+        Self {
+            code: -32800,
+            message: "Request cancelled".to_string(),
+            data: None,
+        }
+    }
+    
+    /// خطأ المحتوى المعدل
+    pub fn content_modified() -> Self {
+        Self {
+            code: -32801,
+            message: "Content modified".to_string(),
+            data: None,
         }
     }
 }
