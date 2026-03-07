@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Al-Marjaa Language"
+version: 3.0.0
+doi: 10.5281/zenodo.XXXXXXX  # DOI will be assigned upon publication
+date-released: 2025-03-07
+url: "https://github.com/radhwendalyhamdouni/Al-Marjaa-Language"
+abstract: >
+  Al-Marjaa (لغة المرجع) is the first complete Arabic programming language with 
+  native AI integration. It features Arabic-first design with RTL syntax, 
+  native AI types (Tensor, AutoTensor, NeuralNetwork), a 5-tier JIT compiler, 
+  parallel generational garbage collector, and Vibe Coding for natural language 
+  programming in Arabic.
+authors:
+  - family-names: "Hamdouni"
+    given-names: "Radhwen Daly"
+    email: almarjaa.project@hotmail.com
+    orcid: https://orcid.org/XXXX-XXXX-XXXX-XXXX
+keywords:
+  - "Arabic programming language"
+  - "AI-native programming"
+  - "JIT compiler"
+  - "Natural language programming"
+  - "Vibe Coding"
+  - "RTL programming"
+  - "Arabic NLP"
+license: All-Rights-Reserved
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Hamdouni"
+      given-names: "Radhwen Daly"
+  title: "Al-Marjaa: The First AI-Native Arabic Programming Language"
+  journal: "Journal of Programming Languages"
+  year: 2025
+  volume: 1
+  issue: 1
+  start: 1
+  end: 25

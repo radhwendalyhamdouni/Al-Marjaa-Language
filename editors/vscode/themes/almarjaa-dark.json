@@ -1,0 +1,151 @@
+{
+  "name": "Al-Marjaa Dark",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#0D1117",
+    "editor.foreground": "#E6EDF3",
+    "editor.lineHighlightBackground": "#161B22",
+    "editor.selectionBackground": "#264F78",
+    "editor.inactiveSelectionBackground": "#264F7855",
+    "editorCursor.foreground": "#58A6FF",
+    "editorWhitespace.foreground": "#484F58",
+    "editorIndentGuide.background": "#21262D",
+    "editorIndentGuide.activeBackground": "#30363D",
+    
+    "activityBar.background": "#0D1117",
+    "activityBar.foreground": "#E6EDF3",
+    "activityBar.activeBorder": "#F78166",
+    
+    "sideBar.background": "#0D1117",
+    "sideBar.foreground": "#E6EDF3",
+    "sideBarSectionHeader.background": "#161B22",
+    
+    "statusBar.background": "#0D1117",
+    "statusBar.foreground": "#E6EDF3",
+    "statusBarItem.hoverBackground": "#161B22",
+    
+    "titleBar.activeBackground": "#0D1117",
+    "titleBar.activeForeground": "#E6EDF3",
+    
+    "tab.activeBackground": "#0D1117",
+    "tab.inactiveBackground": "#161B22",
+    "tab.activeBorderTop": "#F78166",
+    
+    "panel.background": "#0D1117",
+    "panel.border": "#30363D",
+    
+    "input.background": "#161B22",
+    "input.border": "#30363D",
+    "input.foreground": "#E6EDF3",
+    
+    "dropdown.background": "#161B22",
+    "dropdown.border": "#30363D",
+    
+    "list.hoverBackground": "#161B22",
+    "list.activeSelectionBackground": "#1F6FEB44",
+    
+    "button.background": "#238636",
+    "button.foreground": "#FFFFFF",
+    "button.hoverBackground": "#2EA043",
+    
+    "scrollbarSlider.background": "#484F5833",
+    "scrollbarSlider.hoverBackground": "#484F5866",
+    
+    "minimap.background": "#0D1117",
+    
+    "editorWidget.background": "#0D1117",
+    "editorWidget.border": "#30363D",
+    
+    "peekView.border": "#F78166",
+    "peekViewEditor.background": "#0D1117",
+    
+    "editorSuggestWidget.background": "#161B22",
+    "editorSuggestWidget.border": "#30363D",
+    "editorSuggestWidget.selectedBackground": "#1F6FEB44"
+  },
+  "tokenColors": [
+    {
+      "scope": ["source.almarjaa"],
+      "settings": {
+        "foreground": "#E6EDF3"
+      }
+    },
+    {
+      "scope": ["keyword.control.almarjaa", "keyword.other.almarjaa"],
+      "settings": {
+        "foreground": "#FF7B72",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["keyword.control.if.almarjaa", "keyword.control.else.almarjaa"],
+      "settings": {
+        "foreground": "#F78166",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["entity.name.function.almarjaa", "support.function.almarjaa"],
+      "settings": {
+        "foreground": "#D2A8FF",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["variable.other.almarjaa"],
+      "settings": {
+        "foreground": "#79C0FF"
+      }
+    },
+    {
+      "scope": ["constant.numeric.almarjaa"],
+      "settings": {
+        "foreground": "#A5D6FF"
+      }
+    },
+    {
+      "scope": ["string.quoted.almarjaa"],
+      "settings": {
+        "foreground": "#A5D6FF",
+        "fontStyle": ""
+      }
+    },
+    {
+      "scope": ["comment.line.almarjaa", "comment.block.almarjaa"],
+      "settings": {
+        "foreground": "#8B949E",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["punctuation.definition.string.begin.almarjaa", "punctuation.definition.string.end.almarjaa"],
+      "settings": {
+        "foreground": "#7EE787"
+      }
+    },
+    {
+      "scope": ["entity.name.type.almarjaa"],
+      "settings": {
+        "foreground": "#7EE787"
+      }
+    },
+    {
+      "scope": ["support.type.almarjaa"],
+      "settings": {
+        "foreground": "#FFA657"
+      }
+    },
+    {
+      "scope": ["meta.function.almarjaa"],
+      "settings": {
+        "foreground": "#D2A8FF"
+      }
+    },
+    {
+      "scope": ["keyword.operator.almarjaa"],
+      "settings": {
+        "foreground": "#FF7B72"
+      }
+    }
+  ]
+}

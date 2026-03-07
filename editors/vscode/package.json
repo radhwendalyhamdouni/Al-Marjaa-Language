@@ -1,0 +1,429 @@
+{
+  "name": "almarjaa-language",
+  "displayName": "Al-Marjaa Language - لغة المرجع",
+  "description": "دعم شامل ومتقدم للغة المرجع العربية مع Vibe Coding و AI Integration",
+  "version": "2.0.0",
+  "publisher": "almarjaa",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Debuggers",
+    "Formatters",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "arabic",
+    "programming",
+    "language",
+    "مرجع",
+    "عربي",
+    "برمجة"
+  ],
+  "activationEvents": [
+    "onLanguage:almarjaa",
+    "workspaceContains:**/*.mrj"
+  ],
+  "main": "./out/extension.js",
+  "icon": "icons/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radhwendalyhamdouni/Al-Marjaa-Language"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": {
+    "name": "رضوان دالي حمدوني | RADHWEN DALY HAMDOUNI",
+    "email": "almarjaa.project@hotmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/radhwendalyhamdouni/Al-Marjaa-Language/issues"
+  },
+  "homepage": "https://docs.almarjaa.io",
+  
+  "contributes": {
+    "languages": [{
+      "id": "almarjaa",
+      "aliases": ["Al-Marjaa", "almarjaa", "المرجع", "مرجع"],
+      "extensions": [".mrj", ".almarjaa"],
+      "icon": { "light": "icons/mrj-light.svg", "dark": "icons/mrj-dark.svg" },
+      "configuration": "./language-configuration.json"
+    }],
+    
+    "grammars": [{
+      "language": "almarjaa",
+      "scopeName": "source.almarjaa",
+      "path": "./syntaxes/almarjaa.tmLanguage.json"
+    }],
+    
+    "snippets": [{
+      "language": "almarjaa",
+      "path": "./snippets/almarjaa.json"
+    }],
+    
+    "commands": [
+      {
+        "command": "almarjaa.restartServer",
+        "title": "إعادة تشغيل خادم المرجع",
+        "category": "Al-Marjaa",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "almarjaa.runFile",
+        "title": "تشغيل ملف المرجع",
+        "category": "Al-Marjaa",
+        "icon": "$(play)"
+      },
+      {
+        "command": "almarjaa.explainCode",
+        "title": "✨ شرح الكود (Vibe Coding)",
+        "category": "Al-Marjaa AI"
+      },
+      {
+        "command": "almarjaa.optimizeCode",
+        "title": "⚡ تحسين الكود",
+        "category": "Al-Marjaa AI"
+      },
+      {
+        "command": "almarjaa.generateTests",
+        "title": "🧪 توليد اختبارات تلقائية",
+        "category": "Al-Marjaa AI"
+      },
+      {
+        "command": "almarjaa.openDocs",
+        "title": "📖 فتح التوثيق",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.showStats",
+        "title": "📊 إحصائيات الكود",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.convertToTypeScript",
+        "title": "تحويل إلى TypeScript",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.convertToPython",
+        "title": "تحويل إلى Python",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.runFunction",
+        "title": "تشغيل الدالة",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.testFunction",
+        "title": "اختبار الدالة",
+        "category": "Al-Marjaa"
+      },
+      {
+        "command": "almarjaa.explainFunction",
+        "title": "شرح الدالة",
+        "category": "Al-Marjaa"
+      }
+    ],
+    
+    "menus": {
+      "editor/title": [
+        {
+          "command": "almarjaa.runFile",
+          "when": "resourceExtname == .mrj",
+          "group": "navigation@1"
+        },
+        {
+          "command": "almarjaa.showStats",
+          "when": "resourceExtname == .mrj",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "almarjaa.runFile",
+          "when": "resourceExtname == .mrj",
+          "group": "navigation@1"
+        },
+        {
+          "command": "almarjaa.explainCode",
+          "when": "resourceExtname == .mrj && editorHasSelection",
+          "group": "ai@1"
+        },
+        {
+          "command": "almarjaa.optimizeCode",
+          "when": "resourceExtname == .mrj && editorHasSelection",
+          "group": "ai@2"
+        },
+        {
+          "command": "almarjaa.generateTests",
+          "when": "resourceExtname == .mrj",
+          "group": "ai@3"
+        },
+        {
+          "command": "almarjaa.convertToTypeScript",
+          "when": "resourceExtname == .mrj",
+          "group": "convert@1"
+        },
+        {
+          "command": "almarjaa.convertToPython",
+          "when": "resourceExtname == .mrj",
+          "group": "convert@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "almarjaa.restartServer",
+          "when": "editorLangId == almarjaa"
+        },
+        {
+          "command": "almarjaa.runFile",
+          "when": "editorLangId == almarjaa"
+        }
+      ]
+    },
+    
+    "keybindings": [
+      {
+        "command": "almarjaa.runFile",
+        "key": "f5",
+        "when": "editorTextFocus && editorLangId == almarjaa"
+      },
+      {
+        "command": "almarjaa.explainCode",
+        "key": "ctrl+shift+e",
+        "when": "editorTextFocus && editorLangId == almarjaa"
+      },
+      {
+        "command": "almarjaa.optimizeCode",
+        "key": "ctrl+shift+o",
+        "when": "editorTextFocus && editorLangId == almarjaa"
+      },
+      {
+        "command": "almarjaa.generateTests",
+        "key": "ctrl+shift+t",
+        "when": "editorTextFocus && editorLangId == almarjaa"
+      }
+    ],
+    
+    "configuration": {
+      "title": "Al-Marjaa",
+      "properties": {
+        "almarjaa.serverPath": {
+          "type": "string",
+          "default": "almarjaa-lsp",
+          "description": "مسار خادم LSP"
+        },
+        "almarjaa.trace.server": {
+          "type": "string",
+          "enum": ["off", "messages", "verbose"],
+          "default": "off",
+          "description": "مستوى التسجيل"
+        },
+        "almarjaa.showWelcome": {
+          "type": "boolean",
+          "default": true,
+          "description": "إظهار رسالة الترحيب"
+        },
+        "almarjaa.vibeCoding.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "تفعيل Vibe Coding مع AI"
+        },
+        "almarjaa.vibeCoding.inlineSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "اقتراحات inline أثناء الكتابة"
+        },
+        "almarjaa.formatting.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "تفعيل التنسيق التلقائي"
+        },
+        "almarjaa.formatting.indentSize": {
+          "type": "number",
+          "default": 4,
+          "description": "حجم المسافة البادئة"
+        },
+        "almarjaa.diagnostics.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "تفعيل التشخيص التلقائي"
+        },
+        "almarjaa.codeLens.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "إظهار Code Lens"
+        }
+      }
+    },
+    
+    "configurationDefaults": {
+      "[almarjaa]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": false,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.autoClosingBrackets": "always",
+        "editor.autoClosingQuotes": "always",
+        "editor.suggestOnTriggerCharacters": true,
+        "editor.acceptSuggestionOnEnter": "on",
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        }
+      }
+    },
+    
+    "themes": [
+      {
+        "label": "Al-Marjaa Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/almarjaa-dark.json"
+      },
+      {
+        "label": "Al-Marjaa Light",
+        "uiTheme": "vs",
+        "path": "./themes/almarjaa-light.json"
+      },
+      {
+        "label": "Al-Marjaa Arabic Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/almarjaa-arabic-night.json"
+      }
+    ],
+    
+    "iconThemes": [
+      {
+        "id": "almarjaa-icons",
+        "label": "Al-Marjaa Icons",
+        "path": "./icons/icon-theme.json"
+      }
+    ],
+    
+    "breakpoints": [
+      {
+        "language": "almarjaa"
+      }
+    ],
+    
+    "debuggers": [
+      {
+        "type": "almarjaa",
+        "label": "Al-Marjaa Debugger",
+        "program": "./out/debugAdapter.js",
+        "runtime": "node",
+        "languages": ["almarjaa"],
+        "configurationAttributes": {
+          "launch": {
+            "required": ["program"],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "مسار البرنامج",
+                "default": "${file}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "التوقف عند البداية",
+                "default": true
+              },
+              "args": {
+                "type": "array",
+                "description": "المعاملات",
+                "default": []
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "almarjaa",
+            "request": "launch",
+            "name": "تشغيل البرنامج",
+            "program": "${file}",
+            "stopOnEntry": false
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Al-Marjaa: تشغيل البرنامج الحالي",
+            "description": "تشغيل ملف المرجع الحالي",
+            "body": {
+              "type": "almarjaa",
+              "request": "launch",
+              "name": "تشغيل ${file}",
+              "program": "^\"\\${file}\""
+            }
+          }
+        ]
+      }
+    ],
+    
+    "taskDefinitions": [
+      {
+        "type": "almarjaa",
+        "required": ["command"],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "الأمر المراد تنفيذه"
+          },
+          "args": {
+            "type": "array",
+            "description": "المعاملات"
+          }
+        }
+      }
+    ],
+    
+    "problemMatchers": [
+      {
+        "name": "almarjaa",
+        "owner": "almarjaa",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.+):(\\d+):(\\d+):\\s+(.+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      }
+    ]
+  },
+  
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  
+  "dependencies": {
+    "vscode-languageclient": "^9.0.0",
+    "vscode-languageserver": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "@vscode/test-electron": "^2.3.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.22.0"
+  },
+  
+  "extensionDependencies": [
+    "ms-vscode.js-debug"
+  ],
+  
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "بعض الميزات قد تكون محدودة في مساحات العمل غير الموثوقة"
+    },
+    "virtualWorkspaces": true
+  }
+}

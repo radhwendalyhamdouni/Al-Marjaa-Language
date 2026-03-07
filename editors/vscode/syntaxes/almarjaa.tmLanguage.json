@@ -1,0 +1,123 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Al-Marjaa",
+  "scopeName": "source.almarjaa",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#functions" },
+    { "include": "#types" },
+    { "include": "#variables" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.almarjaa",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.almarjaa",
+          "match": "\\b(إذا|وإلا|طالما|لكل|في|ارجع|أعطِ|تأكد)\\b"
+        },
+        {
+          "name": "keyword.declaration.almarjaa",
+          "match": "\\b(متغير|ثابت|دالة|نوع|هيكل|واجهة|فئة|خاص|عام)\\b"
+        },
+        {
+          "name": "keyword.other.almarjaa",
+          "match": "\\b(استورد|من|كـ|جديد|صحيح|خطأ|فارغ)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.almarjaa",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.almarjaa",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.almarjaa",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.almarjaa",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.almarjaa",
+          "match": "\\b[٠-٩0-9]+(\\.[٠-٩0-9]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.hex.almarjaa",
+          "match": "0x[0-9a-fA-F]+"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.almarjaa",
+          "match": "(\\+|\\-|\\*|\\/|%)"
+        },
+        {
+          "name": "keyword.operator.comparison.almarjaa",
+          "match": "(==|!=|<|>|<=|>=)"
+        },
+        {
+          "name": "keyword.operator.logical.almarjaa",
+          "match": "(&&|\\|\\||!)"
+        },
+        {
+          "name": "keyword.operator.assignment.almarjaa",
+          "match": "(=|\\+=|\\-=|\\*=|\\/=)"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.almarjaa",
+          "match": "\\b(اطبع|أدخل|طول|نوع|تحويل|قراءة|كتابة|فتح|إغلاق|فرز|بحث)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.builtin.almarjaa",
+          "match": "\\b(عدد|نص|منطقي|قائمة|مصفوفة|خريطة|Tensor|NeuralNetwork)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.almarjaa",
+          "match": "\\b[أ-يآ-ۓ][أ-يآ-ۓ٠-٩0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}

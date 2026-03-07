@@ -1,0 +1,32 @@
+[package]
+name = "almarjaa-lsp"
+version = "3.0.0"
+edition = "2021"
+authors = ["رضوان دالي حمدوني"]
+description = "LSP Server للغة المرجع - متكامل مع المحلل الأصلي"
+
+[[bin]]
+name = "almarjaa-lsp"
+path = "src/main.rs"
+
+[dependencies]
+# LSP الأساسي
+lsp-types = "0.95"
+crossbeam-channel = "0.5"
+
+# JSON-RPC
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# معالجة النصوص
+unicode-segmentation = "1.11"
+
+# التزامن
+rayon = "1.10"
+
+# من المشروع الأصلي - استخدام المسار النسبي
+# عند الدمج الفعلي، غير المسار ليشير إلى المجلد الأصلي
+almarjaa = { path = ".." }
+
+[features]
+default = []

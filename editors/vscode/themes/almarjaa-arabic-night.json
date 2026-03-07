@@ -1,0 +1,84 @@
+{
+  "name": "Al-Marjaa Arabic Night",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#1A1A2E",
+    "editor.foreground": "#EAEAEA",
+    "editor.lineHighlightBackground": "#16213E",
+    "editor.selectionBackground": "#0F346044",
+    "editorCursor.foreground": "#E94560",
+    "editorWhitespace.foreground": "#3D3D5C",
+    "editorIndentGuide.background": "#2D2D44",
+    "editorIndentGuide.activeBackground": "#3D3D5C",
+    
+    "activityBar.background": "#1A1A2E",
+    "activityBar.foreground": "#EAEAEA",
+    "activityBar.activeBorder": "#E94560",
+    
+    "sideBar.background": "#16213E",
+    "sideBar.foreground": "#EAEAEA",
+    
+    "statusBar.background": "#0F3460",
+    "statusBar.foreground": "#EAEAEA",
+    
+    "titleBar.activeBackground": "#1A1A2E",
+    "titleBar.activeForeground": "#EAEAEA",
+    
+    "tab.activeBackground": "#1A1A2E",
+    "tab.inactiveBackground": "#16213E",
+    "tab.activeBorderTop": "#E94560",
+    
+    "button.background": "#E94560",
+    "button.foreground": "#FFFFFF",
+    
+    "input.background": "#16213E",
+    "input.border": "#0F3460"
+  },
+  "tokenColors": [
+    {
+      "scope": ["keyword.control.almarjaa"],
+      "settings": {
+        "foreground": "#E94560",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["entity.name.function.almarjaa"],
+      "settings": {
+        "foreground": "#FFD93D",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["variable.other.almarjaa"],
+      "settings": {
+        "foreground": "#6BCB77"
+      }
+    },
+    {
+      "scope": ["string.quoted.almarjaa"],
+      "settings": {
+        "foreground": "#4D96FF"
+      }
+    },
+    {
+      "scope": ["comment.line.almarjaa"],
+      "settings": {
+        "foreground": "#5C5C7A",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["constant.numeric.almarjaa"],
+      "settings": {
+        "foreground": "#FF6B6B"
+      }
+    },
+    {
+      "scope": ["support.type.almarjaa"],
+      "settings": {
+        "foreground": "#C4B5FD"
+      }
+    }
+  ]
+}
