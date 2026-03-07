@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Distribution</key>
+    <dict>
+        <key>VERSION</key>
+        <string>3.3.0</string>
+        <key>TITLE</key>
+        <string>لغة المرجع - Al-Marjaa Language</string>
+        <key>BACKGROUND</key>
+        <string>background.png</string>
+        <key>README</key>
+        <string>README.md</string>
+        <key>WELCOME</key>
+        <string>مرحباً بك في لغة المرجع - لغة برمجة عربية متكاملة</string>
+        <key>CONCLUSION</key>
+        <string>تم تثبيت لغة المرجع بنجاح! شغّل Terminal واكتب: almarjaa</string>
+    </dict>
+    <key>Package</key>
+    <dict>
+        <key>Identifier</key>
+        <string>io.almarjaa.pkg</string>
+        <key>Name</key>
+        <string>almarjaa</string>
+        <key>Version</key>
+        <string>3.3.0</string>
+        <key>InstallLocation</key>
+        <string>/usr/local</string>
+    </dict>
+    <key>Scripts</key>
+    <dict>
+        <key>Preinstall</key>
+        <string>preinstall.sh</string>
+        <key>Postinstall</key>
+        <string>postinstall.sh</string>
+    </dict>
+</dict>
+</plist>

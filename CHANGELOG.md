@@ -103,6 +103,21 @@ All notable changes to this project are documented in this file.
 
 - ✅ **توثيق التثبيت الشامل** (`docs/getting-started/installation-packages.md`)
 
+- ✅ **حزم التثبيت الاحترافية**
+  - `.deb` (Debian/Ubuntu) - حزمة DEB كاملة مع control, postinst, prerm
+  - `.rpm` (Fedora/RHEL) - RPM spec file كامل
+  - `.msi` (Windows) - WiX Toolset installer مع file associations
+  - `.dmg` (macOS) - macOS Disk Image مع entitlements
+  - `.pkg` (macOS) - macOS Installer Package
+  
+- ✅ **نظام البناء الموحد** (`packaging/Makefile`)
+  - `make deb` - إنشاء حزمة DEB
+  - `make rpm` - إنشاء حزمة RPM
+  - `make msi` - إنشاء حزمة MSI
+  - `make dmg` - إنشاء حزمة DMG
+  - `make pkg` - إنشاء حزمة PKG
+  - `make all-packages` - إنشاء جميع الحزم
+
 #### نظام الحزم الكامل | Complete Package Manager
 
 - ✅ **نظام Lockfile المتقدم** (`src/package_manager/lockfile.rs`)

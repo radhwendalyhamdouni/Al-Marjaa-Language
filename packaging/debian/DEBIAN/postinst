@@ -1,0 +1,70 @@
+#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+# لغة المرجع - Post-install Script
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+# إنشاء مجلدات المستخدم
+mkdir -p /usr/share/almarjaa/examples
+mkdir -p /usr/share/almarjaa/docs
+mkdir -p /etc/almarjaa
+
+# إنشاء ملف التكوين الافتراضي
+if [ ! -f /etc/almarjaa/config.toml ]; then
+    cat > /etc/almarjaa/config.toml << 'EOF'
+# ═══════════════════════════════════════════════════════════════════════════════
+# إعدادات لغة المرجع
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[general]
+language = "arabic"
+version = "3.3.0"
+
+[editor]
+auto_completion = true
+semantic_tokens = true
+inlay_hints = true
+code_lens = true
+
+[ai]
+enabled = false
+model_path = "/usr/share/almarjaa/models/"
+
+[package_manager]
+registry_url = "https://packages.almarjaa.io"
+cache_dir = "/var/cache/almarjaa"
+EOF
+fi
+
+# تحديث مكتبة الملفات
+if command -v ldconfig &> /dev/null; then
+    ldconfig
+fi
+
+# تحديث قاعدة بيانات man
+if command -v mandb &> /dev/null; then
+    mandb -q 2>/dev/null || true
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# رسالة الترحيب
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cat << 'EOF'
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                      ✅ تم تثبيت لغة المرجع بنجاح!                          ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  🚀 للتشغيل:                                                                  ║
+║     almarjaa                    # الوضع التفاعلي                             ║
+║     almarjaa script.mrj         # تشغيل ملف                                  ║
+║     almarjaa --help             # المساعدة                                    ║
+║                                                                               ║
+║  📚 الأمثلة: /usr/share/almarjaa/examples/                                   ║
+║  📖 التوثيق: https://docs.almarjaa.io                                        ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+EOF

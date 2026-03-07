@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:ui="http://schemas.microsoft.com/wix/WixUIExtension">
+    
+    <!-- ═════════════════════════════════════════════════════════════════════════════
+         لغة المرجع - Windows Installer (MSI)
+         ═════════════════════════════════════════════════════════════════════════════ -->
+    
+    <?define ProductName = "Al-Marjaa Language" ?>
+    <?define ProductNameAr = "لغة المرجع" ?>
+    <?define Manufacturer = "رضوان دالي حمدوني" ?>
+    <?define ProductVersion = "3.3.0.0" ?>
+    <?define UpgradeCode = "A1B2C3D4-E5F6-7890-ABCD-EF1234567890" ?>
+    
+    <Product Id="*"
+             Name="$(var.ProductName)"
+             Language="1033"
+             Version="$(var.ProductVersion)"
+             Manufacturer="$(var.Manufacturer)"
+             UpgradeCode="$(var.UpgradeCode)">
+        
+        <Package InstallerVersion="200"
+                 Compressed="yes"
+                 InstallScope="perMachine"
+                 Description="Arabic Programming Language with AI"
+                 Manufacturer="$(var.Manufacturer)" />
+        
+        <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
+        
+        <MediaTemplate EmbedCab="yes" />
+        
+        <UIRef Id="WixUI_InstallDir" />
+        
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+        
+        <!-- ═══════════════════════════════════════════════════════════════════════════
+             المجلدات
+             ═══════════════════════════════════════════════════════════════════════════ -->
+        
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLFOLDER" Name="Al-Marjaa">
+                    <Directory Id="BinFolder" Name="bin" />
+                    <Directory Id="ExamplesFolder" Name="examples" />
+                </Directory>
+            </Directory>
+            
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ApplicationProgramsFolder" Name="Al-Marjaa" />
+            </Directory>
+        </Directory>
+        
+        <!-- ═══════════════════════════════════════════════════════════════════════════
+             المكونات
+             ═══════════════════════════════════════════════════════════════════════════ -->
+        
+        <DirectoryRef Id="BinFolder">
+            <Component Id="MainExecutable" Guid="*">
+                <File Id="AlmarjaaExe"
+                      Source="almarjaa.exe"
+                      KeyPath="yes" />
+                
+                <Environment Id="PATH"
+                             Name="PATH"
+                             Value="[BinFolder]"
+                             Permanent="no"
+                             Part="last"
+                             Action="set"
+                             System="yes" />
+            </Component>
+        </DirectoryRef>
+        
+        <!-- Shortcuts -->
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="*">
+                <Shortcut Id="ApplicationStartMenuShortcut"
+                          Name="Al-Marjaa"
+                          Target="[BinFolder]almarjaa.exe"
+                          WorkingDirectory="BinFolder" />
+                
+                <RemoveFolder Id="RemoveApplicationProgramsFolder"
+                              Directory="ApplicationProgramsFolder"
+                              On="uninstall" />
+                
+                <RegistryValue Root="HKCU"
+                               Key="Software\Al-Marjaa"
+                               Name="installed"
+                               Type="integer"
+                               Value="1"
+                               KeyPath="yes" />
+            </Component>
+        </DirectoryRef>
+        
+        <!-- ═══════════════════════════════════════════════════════════════════════════
+             الميزات
+             ═══════════════════════════════════════════════════════════════════════════ -->
+        
+        <Feature Id="MainFeature" Title="Al-Marjaa Language" Level="1">
+            <ComponentRef Id="MainExecutable" />
+            <ComponentRef Id="ApplicationShortcut" />
+        </Feature>
+        
+        <!-- File Association -->
+        <RegistryValue Root="HKCR"
+                       Key=".mrj"
+                       Value="AlMarjaa.SourceFile"
+                       Type="string" />
+        
+        <RegistryValue Root="HKCR"
+                       Key="AlMarjaa.SourceFile\shell\open\command"
+                       Value="&quot;[BinFolder]almarjaa.exe&quot; &quot;%1&quot;"
+                       Type="string" />
+        
+    </Product>
+    
+</Wix>

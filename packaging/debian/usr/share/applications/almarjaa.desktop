@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Al-Marjaa
+Name[ar]=المرجع
+Comment=Arabic Programming Language IDE
+Comment[ar]=لغة برمجة عربية
+GenericName=Programming Language
+GenericName[ar]=لغة برمجة
+Exec=almarjaa %F
+Icon=almarjaa
+Terminal=true
+Categories=Development;IDE;Languages;
+Keywords=programming;arabic;language;almarjaa;
+Keywords[ar]=برمجة;عربي;لغة;المرجع;
+StartupNotify=true
+StartupWMClass=almarjaa

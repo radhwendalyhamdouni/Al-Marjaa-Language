@@ -1,0 +1,20 @@
+Package: almarjaa
+Version: 3.3.0
+Section: devel
+Priority: optional
+Architecture: amd64
+Maintainer: رضوان دالي حمدوني <almarjaa.project@hotmail.com>
+Homepage: https://almarjaa.io
+Description: لغة المرجع - لغة برمجة عربية متكاملة مع ذكاء اصطناعي
+ لغة المرجع هي لغة برمجة عربية متكاملة مع:
+ .
+ 🧠 JIT Compiler متقدم (5-Tier)
+ 🌙 Vibe Coding مع الذكاء الاصطناعي
+ 📦 المكتبة القياسية الشاملة (HTTP, Database, Regex, Crypto)
+ 🎨 نظام واجهات المستخدم المتكامل
+ 🔧 LSP Server متكامل
+ 🚀 دعم ONNX للذكاء الاصطناعي
+Depends: libc6 (>= 2.27), libssl1.1 (>= 1.1.1)
+License: All-Rights-Reserved
+Vendor: رضوان دالي حمدوني
+Installed-Size: 45000
