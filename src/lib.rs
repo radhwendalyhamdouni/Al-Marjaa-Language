@@ -27,6 +27,7 @@ pub mod interpreter;
 pub mod lexer;
 pub mod linter;
 pub mod lsp_bridge;
+pub mod mobile;
 pub mod onnx;
 pub mod package_manager;
 pub mod parser;
@@ -89,6 +90,15 @@ pub use gui::{
 pub use exporter::{
     ExportEngine, ExportConfig, ExportPlatform, ExportResult,
     export_project, export_html_only,
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// تصدير نظام الهواتف المحمولة
+// ═══════════════════════════════════════════════════════════════════════════════
+
+pub use mobile::{
+    MobileExporter, MobileExportConfig, MobilePlatform, MobileFramework,
+    MobileExportResult, export_mobile,
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════

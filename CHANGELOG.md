@@ -10,6 +10,57 @@ All notable changes to this project are documented in this file.
 
 ### 🆕 ميزات جديدة | New Features
 
+#### تصدير الهواتف المحمولة | Mobile Export Support
+- ✅ **نظام تصدير متكامل للهواتف** (`src/mobile/`)
+  - دعم Android و iOS
+  - 4 أطر عمل مدعومة: Flutter, React Native, Native, Capacitor
+  - توليد كود أصلي (Kotlin/Swift)
+  - تكامل WASM للأداء الأمثل
+  - دعم RTL للغة العربية
+
+- ✅ **Flutter Export** (`src/mobile/templates/flutter.rs`)
+  - مشروع Flutter كامل مع pubspec.yaml
+  - ثيم مخصص مع دعم Dark Mode
+  - WASM Runtime متكامل
+  - شاشات ومكونات جاهزة
+  - ترجمة عربية/إنجليزية
+
+- ✅ **React Native Export** (`src/mobile/templates/react_native.rs`)
+  - مشروع React Native مع TypeScript
+  - دعم RTL تلقائي
+  - i18n للترجمة
+  - Navigation جاهز
+  - WASM Runtime
+
+- ✅ **Android Native Export** (`src/mobile/templates/android.rs`)
+  - مشروع Kotlin كامل
+  - Gradle build configuration
+  - Material Design 3
+  - دعم RTL
+  - موارد عربية/إنجليزية
+
+- ✅ **iOS Native Export** (`src/mobile/templates/ios.rs`)
+  - مشروع Swift كامل
+  - UIKit مخصص
+  - SwiftUI ready
+  - دعم RTL
+  - Localizable strings
+
+- ✅ **Capacitor Export** (`src/mobile/templates/capacitor.rs`)
+  - مشروع Capacitor متكامل
+  - PWA support
+  - إضافات جاهزة
+  - Cross-platform
+
+- ✅ **CLI Commands جديدة**
+  - `almarjaa mobile export <file> -p <platform> -f <framework> -n <name>`
+  - `almarjaa mobile list` - عرض المنصات والأطر المتاحة
+
+- ✅ **كلمات مفتاحية عربية جديدة**
+  - `صدر_للهاتف`, `منصة`, `إطار`
+  - `أندرويد`, `آيفون`, `فلاتر`
+  - `ريأكت`, `كاباسيتور`
+
 #### LSP Server المتكامل والمتقدم | Complete Advanced LSP Server
 - ✅ **LSP Server 3.3.0** (`editors/lsp-server/`)
   - خادم LSP كامل متكامل مع المحلل الأصلي

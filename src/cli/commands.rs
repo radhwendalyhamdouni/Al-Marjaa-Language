@@ -15,6 +15,9 @@ use almarjaa::lsp_bridge::{
 use almarjaa::package_manager::{
     PackageManager, resolve_dependencies, write_lockfile,
 };
+use almarjaa::mobile::{
+    MobileExporter, MobileExportConfig, MobilePlatform, MobileFramework,
+};
 
 pub fn print_help() {
     println!("{}", crate::rtl("استخدام:").bright_yellow());
@@ -38,6 +41,7 @@ pub fn print_help() {
     println!("      --lsp-diag     إخراج diagnostics بصيغة JSON");
     println!("  pm <cmd>           واجهة جديدة: init/check/tree");
     println!("  lsp <cmd>          واجهة جديدة: diag/complete/hover/definition/references");
+    println!("  mobile <cmd>       تصدير للهواتف: export/list");
     println!("  أوامر ذكاء REPL    اكتب: ذكاء");
     println!();
     println!("{}", crate::rtl("أمثلة:").bright_yellow());
@@ -46,6 +50,7 @@ pub fn print_help() {
     println!("  almarjaa -t program.mrj       عرض الرموز المميزة");
     println!("  almarjaa pm check             فحص manifest وتحديث lockfile");
     println!("  almarjaa lsp hover app.mrj 3 8  معلومات hover");
+    println!("  almarjaa mobile export app.mrj -p android -f flutter");
 }
 
 pub fn print_version(version: &str) {
@@ -208,6 +213,79 @@ pub fn handle_lsp_commands(options: &RunOptions, filename: Option<&str>) -> bool
             }
         }
         return true;
+    }
+
+    true
+}
+
+/// معالجة أوامر تصدير الهواتف المحمولة
+pub fn handle_mobile_command(options: &RunOptions, filename: Option<&str>) -> bool {
+    if !options.mobile_export {
+        return false;
+    }
+
+    // عرض القائمة فقط
+    if options.mobile_platform.is_none() && options.mobile_framework.is_none() {
+        return true; // تمت معالجة الأمر list
+    }
+
+    // الحصول على الكود المصدري
+    let fname = filename.unwrap_or_else(|| {
+        eprintln!("{}", crate::rtl("تصدير الهواتف يحتاج ملفاً").bright_red());
+        process::exit(1);
+    });
+
+    let source_code = fs::read_to_string(fname).unwrap_or_else(|e| {
+        eprintln!(
+            "{}",
+            crate::rtl(&format!("خطأ في قراءة الملف '{}': {}", fname, e)).bright_red()
+        );
+        process::exit(1);
+    });
+
+    // إنشاء التكوين
+    let config = MobileExportConfig {
+        project_name: options.mobile_project_name.clone().unwrap_or_else(|| {
+            Path::new(fname)
+                .file_stem()
+                .and_then(|s| s.to_str())
+                .unwrap_or("almarjaa_app")
+                .to_string()
+        }),
+        platform: options.mobile_platform.as_deref()
+            .and_then(MobilePlatform::from_arabic)
+            .unwrap_or(MobilePlatform::Android),
+        framework: options.mobile_framework.as_deref()
+            .and_then(MobileFramework::from_arabic)
+            .unwrap_or(MobileFramework::Flutter),
+        ..Default::default()
+    };
+
+    // إنشاء المصدّر والتصدير
+    let exporter = MobileExporter::new(config);
+    let result = exporter.export(&source_code);
+
+    if result.success {
+        if let Some(path) = result.output_path {
+            println!(
+                "{}",
+                crate::rtl(&format!("✅ تم إنشاء المشروع في: {}", path.display())).bright_green()
+            );
+        }
+        
+        if !result.warnings.is_empty() {
+            println!();
+            println!("{}", crate::rtl("التحذيرات:").bright_yellow());
+            for warning in &result.warnings {
+                println!("  ⚠️  {}", warning);
+            }
+        }
+    } else {
+        eprintln!(
+            "{}",
+            crate::rtl(&format!("❌ فشل التصدير: {}", result.message)).bright_red()
+        );
+        process::exit(1);
     }
 
     true

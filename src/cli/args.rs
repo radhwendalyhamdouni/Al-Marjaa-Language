@@ -20,6 +20,11 @@ pub struct RunOptions {
     pub lsp_hover: Option<(usize, usize)>,
     pub lsp_definition: Option<(usize, usize)>,
     pub lsp_references: Option<(usize, usize)>,
+    // تصدير الهواتف المحمولة
+    pub mobile_export: bool,
+    pub mobile_platform: Option<String>,
+    pub mobile_framework: Option<String>,
+    pub mobile_project_name: Option<String>,
 }
 
 pub struct ParsedCli {
@@ -43,6 +48,7 @@ pub fn parse_args(args: &[String]) -> CliAction {
         match args[1].as_str() {
             "pm" => parse_pm_subcommand(args, &mut options),
             "lsp" => parse_lsp_subcommand(args, &mut options, &mut filename),
+            "mobile" => parse_mobile_subcommand(args, &mut options, &mut filename),
             _ => {}
         }
     }
@@ -55,6 +61,7 @@ pub fn parse_args(args: &[String]) -> CliAction {
         && options.lsp_hover.is_none()
         && options.lsp_definition.is_none()
         && options.lsp_references.is_none()
+        && !options.mobile_export
     {
         let mut i = 1;
         while i < args.len() {
@@ -257,6 +264,64 @@ fn parse_lsp_subcommand(args: &[String], options: &mut RunOptions, filename: &mu
                 "{}",
                 crate::rtl("استخدم: almarjaa lsp [diag|complete|hover|definition|references]")
                     .bright_red()
+            );
+            process::exit(1);
+        }
+    }
+}
+
+fn parse_mobile_subcommand(args: &[String], options: &mut RunOptions, filename: &mut Option<String>) {
+    options.mobile_export = true;
+    
+    match args.get(2).map(String::as_str) {
+        Some("export") => {
+            // mobile export <file> --platform <platform> --framework <framework> --name <name>
+            *filename = args.get(3).cloned();
+            
+            let mut i = 4;
+            while i < args.len() {
+                match args[i].as_str() {
+                    "--platform" | "-p" => {
+                        i += 1;
+                        options.mobile_platform = args.get(i).cloned();
+                    }
+                    "--framework" | "-f" => {
+                        i += 1;
+                        options.mobile_framework = args.get(i).cloned();
+                    }
+                    "--name" | "-n" => {
+                        i += 1;
+                        options.mobile_project_name = args.get(i).cloned();
+                    }
+                    _ => {}
+                }
+                i += 1;
+            }
+        }
+        Some("list") => {
+            // عرض المنصات والأطر المتاحة
+            println!("{}", crate::rtl("المنصات المتاحة:").bright_cyan());
+            println!("  - أندرويد (android)");
+            println!("  - آيفون (ios)");
+            println!("  - كلاهما (both)");
+            println!();
+            println!("{}", crate::rtl("الأطر المتاحة:").bright_cyan());
+            println!("  - فلاتر (flutter) - موصى به");
+            println!("  - React Native (react-native)");
+            println!("  - أصلي (native)");
+            println!("  - Capacitor (capacitor)");
+        }
+        Some(other) => {
+            eprintln!(
+                "{}",
+                crate::rtl(&format!("أمر mobile غير معروف: {}", other)).bright_red()
+            );
+            process::exit(1);
+        }
+        None => {
+            eprintln!(
+                "{}",
+                crate::rtl("استخدم: almarjaa mobile [export|list]").bright_red()
             );
             process::exit(1);
         }

@@ -23,6 +23,10 @@ pub fn run(args: &[String], version: &str) {
                 return;
             }
 
+            if commands::handle_mobile_command(&parsed.options, parsed.filename.as_deref()) {
+                return;
+            }
+
             if let Some(fname) = parsed.filename {
                 commands::run_file(&fname, &parsed.options);
             } else if parsed.run_repl_flag || args.len() == 1 {
