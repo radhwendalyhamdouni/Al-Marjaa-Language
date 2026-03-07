@@ -5,7 +5,7 @@
 // جميع الحقوق محفوظة | All Rights Reserved
 // ═══════════════════════════════════════════════════════════════════════════════
 // لغة برمجة عربية متكاملة مع ذكاء اصطناعي وواجهات متقدمة
-// الإصدار 3.2.0
+// الإصدار 3.3.0
 // المؤلف: رضوان دالي حمدوني
 // البريد: almarjaa.project@hotmail.com
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -31,6 +31,7 @@ pub mod onnx;
 pub mod package_manager;
 pub mod parser;
 pub mod runtime;
+pub mod stdlib;
 pub mod ui;
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -234,7 +235,7 @@ pub use ui::{
 };
 
 /// الإصدار الحالي للغة
-pub const VERSION: &str = "3.2.0";
+pub const VERSION: &str = "3.3.0";
 
 /// معلومات عن اللغة
 pub fn info() -> &'static str {
@@ -243,7 +244,7 @@ pub fn info() -> &'static str {
     ║         لغة المرجع - Al-Marjaa Language                      ║
     ║         لغة برمجة عربية مع ذكاء اصطناعي                       ║
     ╠═══════════════════════════════════════════════════════════════╣
-    ║  الإصدار: 3.2.0                                              ║
+    ║  الإصدار: 3.3.0                                              ║
     ║  Vibe Coding: ✅ مفعّل                                        ║
     ║  Bytecode VM: ✅ مفعّل                                        ║
     ║  JIT Compiler: ✅ مفعّل (5 مستويات)                           ║
@@ -252,6 +253,7 @@ pub fn info() -> &'static str {
     ║  Fine-tuning: ✅ مفعّل                                        ║
     ║  ONNX Support: ✅ مفعّل                                       ║
     ║  UI System: ✅ مفعّل (تخطيط، ربط، ثيمات، رسوم)               ║
+    ║  Standard Library: ✅ HTTP, Database, Regex, Crypto          ║
     ║  المؤلف: رضوان دالي حمدوني                                   ║
     ║  GitHub: github.com/radhwendalyhamdouni/Al-Marjaa-Language     ║
     ╚═══════════════════════════════════════════════════════════════╝
