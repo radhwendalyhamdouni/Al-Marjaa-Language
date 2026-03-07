@@ -7,11 +7,15 @@
 // - حل تبعيات بالذكاء الاصطناعي
 // - تحقق أمني تلقائي
 // - أوامر عربية سهلة
+// - توقيع الحزم
+// - التوزيع الثنائي
+// - دعم Workspace
 // ═══════════════════════════════════════════════════════════════════════════════
 
 pub mod config;
 pub mod registry;
 pub mod resolver;
+pub mod dependency;
 pub mod installer;
 pub mod publisher;
 pub mod security;
@@ -20,6 +24,10 @@ pub mod badges;
 pub mod decentralized;
 pub mod reputation;
 pub mod versioning;
+pub mod lockfile;
+pub mod binary;
+pub mod signing;
+pub mod workspace;
 
 pub use config::PackageConfig;
 pub use registry::{Registry, PackageInfo, PackageVersion};
@@ -32,6 +40,10 @@ pub use badges::{PackageEvaluator, PackageRating, Badge, BadgeLevel, EvaluationI
 pub use decentralized::{DecentralizedRegistry, DocumentationGenerator, GeneratedDocumentation};
 pub use reputation::{ReputationSystem, AuthorProfile, AuthorLevel, VerificationStatus};
 pub use versioning::{SemanticVersion, ChangeAnalyzer, CISystem, CIConfig, ChangeType};
+pub use lockfile::{Lockfile, LockedPackage, LockfileDiff};
+pub use binary::{BinaryDistribution, BinaryRelease, BuildTarget, BinaryBuilder};
+pub use signing::{SigningKey, PackageSignature, KeyRegistry, SignatureVerifier, PackageSigner};
+pub use workspace::{Workspace, WorkspaceMember, WorkspaceConfig, WorkspaceBuilder, WorkspaceRunner};
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
